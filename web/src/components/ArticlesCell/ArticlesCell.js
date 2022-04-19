@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardActions,
-  Typography,
-  Button,
-} from '@mui/material'
+import Article from "src/components/Article/Article"
 
 export const QUERY = gql`
   query ArticlesQuery {
@@ -34,26 +28,7 @@ export const Success = ({ articles }) => {
       date = new Date(item.createdAt)
       dateCreated = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
         return (
-          <Card sx={{ minWidth: 275, marginTop: 2, marginBottom: 2 }}>
-            <CardContent>
-              <Typography variant="h5" component="div">
-                {item.title}
-              </Typography>
-              <Typography variant="body2">
-                {item.body}
-              </Typography>
-              <Typography
-                sx={{ fontSize: 10 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                Posted At: {dateCreated}
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
+          <Article article={item} dateCreated={dateCreated} key={item.id} />
         )
       })}
     </div>
