@@ -6,14 +6,14 @@ import {
   Button,
 } from '@mui/material'
 import { routes, Link } from '@redwoodjs/router'
-const Article = ({article, dateCreated}) => {
+const Article = ({article, dateCreated, summary=false}) => {
   return (
     <Card sx={{ minWidth: 275, marginTop: 2, marginBottom: 2 }}>
       <CardContent>
         <Typography variant="h5" component="div">
           <Link to={routes.article({ id: article.id })}>{article.title}</Link>
         </Typography>
-        <Typography variant="body2">{article.body}</Typography>
+        <Typography variant="body2">{ summary ? trucate(article.body, 100): article.body}</Typography>
         <Typography sx={{ fontSize: 10 }} color="text.secondary" gutterBottom>
           Posted At: {dateCreated}
         </Typography>
