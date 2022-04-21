@@ -1,4 +1,5 @@
 import { Link, routes } from '@redwoodjs/router'
+import { useAuth } from '@redwoodjs/auth'
 import {
   AppBar,
   Toolbar,
@@ -25,10 +26,12 @@ const styles = {
   },
   button: {
     // ...theme.typography.estimate,
-    borderRadius: '50px',
-    marginLeft: '50px',
-    marginRight: '25px',
+    borderRadius: '8px',
+    marginLeft: '16px',
+    marginRight: '16px',
     height: '45px',
+    color: 'white',
+    border: '2px solid white'
   },
   menu: {
     '& .MuiMenu-paper': {
@@ -51,6 +54,7 @@ const styles = {
 
 const BlogLayout = ({ children }) => {
   const [activeTab, setActiveTab] = useState(0)
+  const {isAuthenticated, currentUser, logOut} = useAuth()
 
   const handleChange = (e, newValue) => {
     setActiveTab(newValue)
@@ -71,6 +75,18 @@ const BlogLayout = ({ children }) => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Redwood blog
             </Typography>
+            {isAuthenticated ? (
+              <div>
+                <span>Logged in as {currentUser.email}</span>
+                <Button onClick={logOut} sx={styles.button}>
+                  Login
+                </Button>
+              </div>
+            ) : (
+              <Button component={Link} to={routes.login()} sx={styles.button}>
+                Login
+              </Button>
+            )}
             <Tabs
               value={activeTab}
               onChange={handleChange}
